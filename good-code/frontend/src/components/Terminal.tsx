@@ -17,7 +17,7 @@ const OPTIONS_TERM = {
         background: "black"
     }
 };
-export const TerminalComponent = ({ socket }: {socket: Socket}) => {
+export const TerminalComponent = ({ socket}: {socket: Socket}) => {
     const terminalRef = useRef();
 
     useEffect(() => {

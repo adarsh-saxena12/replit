@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { Server as HttpServer } from "http";
+import {Server as HttpServer} from "http";
 import { fetchS3Folder, saveToS3 } from "./aws";
 import path from "path";
 import { fetchDir, fetchFileContent, saveFile } from "./fs";
@@ -19,7 +19,8 @@ export function initWs(httpServer: HttpServer) {
     io.on("connection", async (socket) => {
         // Auth checks should happen here
         const replId = socket.handshake.query.roomId as string;
-
+         console.log(replId);
+         
         if (!replId) {
             socket.disconnect();
             terminalManager.clear(socket.id);

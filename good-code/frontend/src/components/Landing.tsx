@@ -36,8 +36,8 @@ const StyledSelect = styled.select`
 
 const StyledButton = styled.button`
   padding: 10px 20px;
-  background-color: #007bff;
   color: white;
+  background-color: #007bff;
   border: none;
   border-radius: 5px;
   cursor: pointer;

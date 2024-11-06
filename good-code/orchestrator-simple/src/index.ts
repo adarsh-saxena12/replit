@@ -17,7 +17,7 @@ const networkingV1Api = kubeconfig.makeApiClient(NetworkingV1Api);
 
 // Updated utility function to handle multi-document YAML files
 const readAndParseKubeYaml = (filePath: string, replId: string): Array<any> => {
-    const fileContent = fs.readFileSync(filePath, 'utf8');
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
     const docs = yaml.parseAllDocuments(fileContent).map((doc) => {
         let docString = doc.toString();
         const regex = new RegExp(`service_name`, 'g');

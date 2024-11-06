@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { Server as HttpServer } from "http";
+import {Server as HttpServer} from "http";
 import { saveToS3 } from "./aws";
 import path from "path";
 import { fetchDir, fetchFileContent, saveFile } from "./fs";
@@ -32,7 +32,7 @@ export function initWs(httpServer: HttpServer) {
         socket.emit("loaded", {
             rootContent: await fetchDir("/workspace", "")
         });
-
+        
         initHandlers(socket, replId);
     });
 }

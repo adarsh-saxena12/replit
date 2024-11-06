@@ -10,6 +10,7 @@ app.use(cors())
 
 app.post("/project", async (req, res) => {
     // Hit a database to ensure this slug isn't taken already
+    // create login page and store associated slug with them into DB
     const { replId, language } = req.body;
 
     if (!replId) {

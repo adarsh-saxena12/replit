@@ -56,7 +56,7 @@ export async function copyS3Folder(sourcePrefix: string, destinationPrefix: stri
                 CopySource: `${process.env.S3_BUCKET}/${object.Key}`,
                 Key: destinationKey
             };
-            console.log(copyParams)
+            console.log('awsfile', copyParams)
 
             await s3.copyObject(copyParams).promise();
             console.log(`Copied ${object.Key} to ${destinationKey}`);

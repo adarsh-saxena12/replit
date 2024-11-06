@@ -7,11 +7,13 @@ import { initHttp } from "./http";
 import cors from "cors";
 
 const app = express();
+
 app.use(cors());
+
 const httpServer = createServer(app);
 
-initWs(httpServer);
-initHttp(app);
+initWs(httpServer);  //websocket logic
+initHttp(app);     //http logic
 
 const port = process.env.PORT || 3001;
 httpServer.listen(port, () => {

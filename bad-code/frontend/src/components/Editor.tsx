@@ -47,3 +47,4 @@ export const Editor = ({
 const Main = styled.main`
   display: flex;
 `;
+

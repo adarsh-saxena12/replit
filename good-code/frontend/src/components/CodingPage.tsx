@@ -56,10 +56,14 @@ const RightPanel = styled.div`
 export const CodingPage = () => {
     const [podCreated, setPodCreated] = useState(false);
     const [searchParams] = useSearchParams();
+
+    // getting the replId from the URL- /coding/?replId=ds3g6
     const replId = searchParams.get('replId') ?? '';
     
     useEffect(() => {
         if (replId) {
+            // replId is given for service_name
+            // creates pod and sets setPodCreated to 'true'
             axios.post(`http://localhost:3002/start`, { replId })
                 .then(() => setPodCreated(true))
                 .catch((err) => console.error(err));
@@ -69,30 +73,39 @@ export const CodingPage = () => {
     if (!podCreated) {
         return <>Booting...</>
     }
+    // after the pod creation
     return <CodingPagePostPodCreation />
 
 }
 
+// afetr creating the pod inside the cluster
+
 export const CodingPagePostPodCreation = () => {
     const [searchParams] = useSearchParams();
     const replId = searchParams.get('replId') ?? '';
+
     const [loaded, setLoaded] = useState(false);
     const socket = useSocket(replId);
+
     const [fileStructure, setFileStructure] = useState<RemoteFile[]>([]);
     const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
     const [showOutput, setShowOutput] = useState(false);
-
+    
     useEffect(() => {
         if (socket) {
+            // listions the loaded event from the container
+            // and gets the rootContent from there
+            // to show file/folders on the edit page 
             socket.on('loaded', ({ rootContent }: { rootContent: RemoteFile[]}) => {
                 setLoaded(true);
                 setFileStructure(rootContent);
             });
         }
     }, [socket]);
-
+    
     const onSelect = (file: File) => {
         if (file.type === Type.DIRECTORY) {
+            // the container code listens this event (inside runner code)
             socket?.emit("fetchDir", file.path, (data: RemoteFile[]) => {
                 setFileStructure(prev => {
                     const allFiles = [...prev, ...data];
@@ -102,6 +115,7 @@ export const CodingPagePostPodCreation = () => {
                 });
             });
         } else {
+            // in case of file, fetch file contents
             socket?.emit("fetchContent", { path: file.path }, (data: string) => {
                 file.content = data;
                 setSelectedFile(file);
@@ -120,11 +134,13 @@ export const CodingPagePostPodCreation = () => {
             </ButtonContainer>
             <Workspace>
                 <LeftPanel>
-                    <Editor socket={socket} selectedFile={selectedFile} onSelect={onSelect} files={fileStructure} />
+                    {/* shows the files and code. here we load the files lazily*/}
+                    <Editor socket={socket!} selectedFile={selectedFile} onSelect={onSelect} files={fileStructure} />
                 </LeftPanel>
                 <RightPanel>
+                    {/* shows output and terminal on right side */}
                     {showOutput && <Output />}
-                    <Terminal socket={socket} />
+                    <Terminal socket={socket!} />
                 </RightPanel>
             </Workspace>
         </Container>

@@ -8,6 +8,7 @@ import styled from '@emotion/styled';
 const SLUG_WORKS = ["car", "dog", "computer", "person", "inside", "word", "for", "please", "to", "cool", "open", "source"];
 const SERVICE_URL = "http://localhost:3001";
 
+
 /** Styled components */
 const Container = styled.div`
   padding: 20px;
@@ -36,7 +37,9 @@ const StyledSelect = styled.select`
 
 const StyledButton = styled.button`
   padding: 10px 20px;
-  background-color: #007bff;
+  // background-color: #007bff;
+    background-color: #5C2FC2;
+
   color: white;
   border: none;
   border-radius: 5px;
@@ -75,8 +78,9 @@ export const Landing = () => {
           name="language"
           id="language"
           onChange={(e) => setLanguage(e.target.value)}
+          
         >
-          <option value="node-js">Node.js</option>
+          <option value="node-js" >Node.js</option>
           <option value="python">Python</option>
         </StyledSelect>
         <StyledButton disabled={loading} onClick={async () => {
@@ -84,7 +88,11 @@ export const Landing = () => {
           await axios.post(`${SERVICE_URL}/project`, { replId, language });
           setLoading(false);
           navigate(`/coding/?replId=${replId}`)
-        }}>{loading ? "Starting ..." : "Start Coding"}</StyledButton>
+        }}>{loading ? "Starting ..." : "Start Coding"}
+        
+        </StyledButton>
       </Container>
     );
 }
+
+
