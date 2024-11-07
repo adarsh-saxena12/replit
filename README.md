@@ -7,5 +7,4 @@ K8s
 Express
 socket.io
 
-## TODOs
-There are a bunch of TODOs that you can go through, there are bounties associated with all of them
+
